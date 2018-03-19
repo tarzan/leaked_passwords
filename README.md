@@ -1,6 +1,15 @@
 # LeakedPasswords
 
-**TODO: Add description**
+**VERY BETA**
+
+usage:
+```ex
+iex> LeakedPasswords.leaked?("my_password")
+896
+
+iex> LeakedPasswords.leaked?("my_super_safe_unknown_password")
+false
+```
 
 ## Installation
 
@@ -10,7 +19,7 @@ by adding `leaked_passwords` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:leaked_passwords, "~> 0.1.0"}
+    {:leaked_passwords, git: "https://github.com/tarzan/leaked_passwords.git"}
   ]
 end
 ```
