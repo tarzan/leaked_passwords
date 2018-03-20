@@ -7,19 +7,21 @@ defmodule LeakedPasswords do
   Checks in HIBP if the SHA1 of the password has been leaked to the outside
   world.
   """
-  def leaked?(password) when is_binary(password) do
+  def leaked?(password) when byte_size(password) > 0 do
     password
     |> hashed_password
     |> request_hashlist
     |> match_in_list
   end
 
-  def hashed_password(password),
+  def leaked?(""), do: false
+
+  defp hashed_password(password),
     do:
       :crypto.hash(:sha, password)
       |> Base.encode16()
 
-  def request_hashlist(<<hash_head::bytes-size(5), hash_tail::bytes-size(35)>>),
+  defp request_hashlist(<<hash_head::bytes-size(5), hash_tail::bytes-size(35)>>),
     do: {hash_tail, HaveIBeenPwnedApi.get!(hash_head).body}
 
   defp match_in_list({hash, tuple}), do: binsearch(tuple, hash, 0, tuple_size(tuple) - 1)
