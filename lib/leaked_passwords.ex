@@ -16,7 +16,7 @@ defmodule LeakedPasswords do
 
   def leaked?(""), do: false
 
-  defp hashed_password(password),
+  def hashed_password(password),
     do:
       :crypto.hash(:sha, password)
       |> Base.encode16()
@@ -29,13 +29,23 @@ defmodule LeakedPasswords do
   defp binsearch(_, _, low, high) when high < low, do: false
 
   defp binsearch(tuple, value, low, high) do
-    mid = div(low + high, 2)
-    <<midval::bytes-size(35)>> <> ":" <> count = elem(tuple, mid)
-
-    cond do
-      value < midval -> binsearch(tuple, value, low, mid - 1)
-      value > midval -> binsearch(tuple, value, mid + 1, high)
-      value == midval -> String.to_integer(count)
-    end
+    (low + high)
+    |> div(2)
+    |> get_elem(tuple)
+    |> compare(value)
+    |> recurse(tuple, value, low, high)
   end
+
+  defp compare({_, <<midval::bytes-size(35)>> <> ":" <> count}, midval),
+    do: String.to_integer(count)
+
+  defp compare({mid, <<midval::bytes-size(35)>> <> _}, value), do: {mid, bounding(midval > value)}
+
+  defp recurse(count, _, _, _, _) when is_integer(count), do: count
+  defp recurse({mid, :lower}, tuple, value, low, _), do: binsearch(tuple, value, low, mid - 1)
+  defp recurse({mid, :upper}, tuple, value, _, high), do: binsearch(tuple, value, mid + 1, high)
+
+  defp get_elem(index, tuple), do: {index, elem(tuple, index)}
+  defp bounding(true), do: :lower
+  defp bounding(false), do: :upper
 end
