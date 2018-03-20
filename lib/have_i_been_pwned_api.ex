@@ -1,9 +1,13 @@
 defmodule HaveIBeenPwnedApi do
   use HTTPoison.Base
 
-  def process_url(url) do
-    "https://api.pwnedpasswords.com/range/" <> url
-  end
+  @endpoint "https://api.pwnedpasswords.com/range/"
 
-  def process_response_body(body), do: String.split(body)
+  def process_url(<<hash_prefix::bytes-size(5)>>), do: @endpoint <> hash_prefix
+
+  def process_response_body(body) do
+    body
+    |> String.split()
+    |> List.to_tuple()
+  end
 end

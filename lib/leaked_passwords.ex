@@ -19,17 +19,21 @@ defmodule LeakedPasswords do
       :crypto.hash(:sha, password)
       |> Base.encode16()
 
-  def request_hashlist(<<hash_head::bytes-size(5), hash_tail::bytes-size(35)>>) do
-    with %{body: list} <- HaveIBeenPwnedApi.get!(hash_head), do: {hash_tail, list}
-  end
+  def request_hashlist(<<hash_head::bytes-size(5), hash_tail::bytes-size(35)>>),
+    do: {hash_tail, HaveIBeenPwnedApi.get!(hash_head).body}
 
-  def match_in_list({_, []}), do: false
+  defp match_in_list({hash, tuple}), do: binsearch(tuple, hash, 0, tuple_size(tuple) - 1)
 
-  def match_in_list({<<hash_tail::bytes-size(35)>>, [head | tail]}),
-    do: hash_match?(hash_tail, head) || match_in_list({hash_tail, tail})
+  defp binsearch(_, _, low, high) when high < low, do: false
 
-  defp hash_match?(hash_tail, entry) do
-    [entry_hash, count] = String.split(entry, ":")
-    with true <- hash_tail == entry_hash, do: String.to_integer(count)
+  defp binsearch(tuple, value, low, high) do
+    mid = div(low + high, 2)
+    <<midval::bytes-size(35)>> <> ":" <> count = elem(tuple, mid)
+
+    cond do
+      value < midval -> binsearch(tuple, value, low, mid - 1)
+      value > midval -> binsearch(tuple, value, mid + 1, high)
+      value == midval -> String.to_integer(count)
+    end
   end
 end
