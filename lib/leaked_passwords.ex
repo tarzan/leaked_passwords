@@ -3,6 +3,8 @@ defmodule LeakedPasswords do
   Documentation for LeakedPasswords.
   """
 
+  alias HaveIBeenPwnedApi.Range
+
   @doc """
   Checks in HIBP if the SHA1 of the password has been leaked to the outside
   world.
@@ -22,7 +24,7 @@ defmodule LeakedPasswords do
       |> Base.encode16()
 
   defp request_hashlist(<<hash_head::bytes-size(5), hash_tail::bytes-size(35)>>),
-    do: {hash_tail, HaveIBeenPwnedApi.get!(hash_head).body}
+    do: {hash_tail, Range.get!(hash_head).body}
 
   defp match_in_list({hash, tuple}), do: binsearch(tuple, hash, 0, tuple_size(tuple) - 1)
 
