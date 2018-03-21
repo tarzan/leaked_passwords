@@ -26,26 +26,34 @@ defmodule LeakedPasswords do
 
   defp match_in_list({hash, tuple}), do: binsearch(tuple, hash, 0, tuple_size(tuple) - 1)
 
-  defp binsearch(_, _, low, high) when high < low, do: false
+  defp binsearch(_, _, lower_bound, upper_bound)
+       when upper_bound < lower_bound,
+       do: false
 
-  defp binsearch(tuple, value, low, high) do
-    (low + high)
-    |> div(2)
+  defp binsearch(tuple, value, lower_bound, upper_bound) do
+    {lower_bound, upper_bound}
+    |> calculate_middle_index()
     |> get_elem(tuple)
     |> compare(value)
-    |> recurse(tuple, value, low, high)
+    |> recurse(tuple, value, lower_bound, upper_bound)
   end
 
-  defp compare({_, <<midval::bytes-size(35)>> <> ":" <> count}, midval),
-    do: String.to_integer(count)
+  defp calculate_middle_index({lower, upper}), do: (lower + upper) |> div(2)
+  defp get_elem(index, tuple), do: {index, elem(tuple, index)}
 
-  defp compare({mid, <<midval::bytes-size(35)>> <> _}, value), do: {mid, bounding(midval > value)}
+  defp compare({_, <<hit::bytes-size(35)>> <> ":" <> count}, hit), do: String.to_integer(count)
+
+  defp compare({index, <<entry::bytes-size(35)>> <> _}, value),
+    do: {index, evaluate(entry > value)}
+
+  defp evaluate(true), do: :lower
+  defp evaluate(false), do: :upper
 
   defp recurse(count, _, _, _, _) when is_integer(count), do: count
-  defp recurse({mid, :lower}, tuple, value, low, _), do: binsearch(tuple, value, low, mid - 1)
-  defp recurse({mid, :upper}, tuple, value, _, high), do: binsearch(tuple, value, mid + 1, high)
 
-  defp get_elem(index, tuple), do: {index, elem(tuple, index)}
-  defp bounding(true), do: :lower
-  defp bounding(false), do: :upper
+  defp recurse({index, :lower}, tuple, value, lower_bound, _),
+    do: binsearch(tuple, value, lower_bound, index - 1)
+
+  defp recurse({index, :upper}, tuple, value, _, upper_bound),
+    do: binsearch(tuple, value, index + 1, upper_bound)
 end
