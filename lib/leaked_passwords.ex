@@ -23,9 +23,11 @@ defmodule LeakedPasswords do
       :crypto.hash(:sha, password)
       |> Base.encode16()
 
-  defp request_hashlist(<<hash_head::bytes-size(5), hash_tail::bytes-size(35)>>),
-    do: {hash_tail, Range.get!(hash_head).body}
+  defp request_hashlist(<<hash_head::bytes-size(5), hash_tail::bytes-size(35)>>) do
+    with {:ok, %{body: result_tuple}} <- Range.get(hash_head), do: {hash_tail, result_tuple}
+  end
 
+  defp match_in_list({:error, _}), do: false
   defp match_in_list({hash, tuple}), do: binsearch(tuple, hash, 0, tuple_size(tuple) - 1)
 
   defp binsearch(_, _, lower_bound, upper_bound)

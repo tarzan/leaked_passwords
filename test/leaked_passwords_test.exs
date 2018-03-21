@@ -18,4 +18,8 @@ defmodule LeakedPasswordsTest do
   test "an empty password" do
     refute LeakedPasswords.leaked?("")
   end
+
+  test "safely handles timeouts" do
+    refute LeakedPasswords.leaked?("Palladium1")
+  end
 end
