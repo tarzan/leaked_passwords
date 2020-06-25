@@ -5,7 +5,7 @@ defmodule LeakedPasswords.MixProject do
     [
       app: :leaked_passwords,
       version: "0.1.0",
-      elixir: "~> 1.6",
+      elixir: "~> 1.8.0",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps()
@@ -25,8 +25,9 @@ defmodule LeakedPasswords.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:poison, "~> 3.1"},
-      {:httpoison, "~> 1.0"}
+      {:credo, "~> 1.0", only: [:dev, :test]},
+      {:jason, "~> 1.2"},
+      {:httpoison, "~> 1.7"}
     ]
   end
 end
