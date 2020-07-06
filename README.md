@@ -1,3 +1,5 @@
+[![Hex pm](http://img.shields.io/hexpm/v/leaked_passwords.svg?style=flat)](https://hex.pm/packages/leaked_passwords)
+
 # LeakedPasswords
 
 A wrapper around [Have I Been Pwned?](https://haveibeenpwned.com/) API endpoints for checking through its datasets whether a given password has been leaked. This wrapper uses the 'safe' endpoints by first calculating the SHA1 and then only POSTing the first 5 characters to the API endpoints.
@@ -46,18 +48,14 @@ _Within Changesets_
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `leaked_passwords` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `leaked_passwords` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:leaked_passwords, git: "https://github.com/tarzan/leaked_passwords.git"}
+    {:leaked_passwords, "~> 1.0"}
   ]
 end
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/leaked_passwords](https://hexdocs.pm/leaked_passwords).
+The docs can be found at [https://hexdocs.pm/leaked_passwords](https://hexdocs.pm/leaked_passwords).
 
