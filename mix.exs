@@ -4,7 +4,7 @@ defmodule LeakedPasswords.MixProject do
   def project do
     [
       app: :leaked_passwords,
-      version: "1.0.0",
+      version: "1.1.0",
       elixir: "~> 1.11.0",
       description: """
       Wrapper around Troy Hunt's endpoints for checking whether a given password
