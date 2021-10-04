@@ -1,10 +1,13 @@
 defmodule LeakedPasswords.MixProject do
   use Mix.Project
 
+  @source_url "https://github.com/tarzan/leaked_passwords"
+  @version "1.1.0"
+
   def project do
     [
       app: :leaked_passwords,
-      version: "1.1.0",
+      version: @version,
       elixir: "~> 1.11.0",
       description: """
       Wrapper around Troy Hunt's endpoints for checking whether a given password
@@ -12,10 +15,11 @@ defmodule LeakedPasswords.MixProject do
       This wrapper uses the 'safe' endpoints by first calculating the SHA1 and
       then only POSTing the first 5 characters to the API endpoints.
       """,
-      package: package(),
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      package: package(),
+      deps: deps(),
+      docs: docs()
     ]
   end
 
@@ -34,16 +38,27 @@ defmodule LeakedPasswords.MixProject do
       name: :leaked_passwords,
       maintainers: ["Maarten Jacobs - @tarzan"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/tarzan/leaked_passwords"}
+      links: %{"GitHub" => @source_url}
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:credo, "~> 1.0", only: [:dev, :test]},
-      {:ex_doc, ">= 0.0.0", only: [:dev, :test]},
+      {:ex_doc, ">= 0.0.0", only: [:dev, :test], runtime: false},
       {:httpoison, "~> 1.7"}
+    ]
+  end
+
+  defp docs do
+    [
+      extras: [
+        "LICENSE.md": [title: "License"],
+        "README.md": [title: "Overview"]
+      ],
+      main: "readme",
+      source_url: @source_url,
+      formatters: ["html"]
     ]
   end
 end

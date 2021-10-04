@@ -1,6 +1,10 @@
-[![Hex pm](http://img.shields.io/hexpm/v/leaked_passwords.svg?style=flat)](https://hex.pm/packages/leaked_passwords)
-
 # LeakedPasswords
+
+[![Module Version](https://img.shields.io/hexpm/v/leaked_passwords.svg)](https://hex.pm/packages/leaked_passwords)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/leaked_passwords/)
+[![Total Download](https://img.shields.io/hexpm/dt/leaked_passwords.svg)](https://hex.pm/packages/leaked_passwords)
+[![License](https://img.shields.io/hexpm/l/leaked_passwords.svg)](https://github.com/tarzan/leaked_passwords/blob/master/LICENSE)
+[![Last Updated](https://img.shields.io/github/last-commit/tarzan/leaked_passwords.svg)](https://github.com/tarzan/leaked_passwords/commits/master)
 
 A wrapper around [Have I Been Pwned?](https://haveibeenpwned.com/) API endpoints for checking through its datasets whether a given password has been leaked. This wrapper uses the 'safe' endpoints by first calculating the SHA1 and then only POSTing the first 5 characters to the API endpoints.
 
@@ -8,7 +12,7 @@ A wrapper around [Have I Been Pwned?](https://haveibeenpwned.com/) API endpoints
 
 ## Usage
 
-```ex
+```elixir
 iex> LeakedPasswords.leaked?("my_password")
 896
 
@@ -17,7 +21,8 @@ false
 ```
 
 _Within Changesets_
-```ex
+
+```elixir
   defp check_for_leaked_password(%Changeset{changes: %{set_password: password}} = changeset) do
     password
     |> LeakedPasswords.leaked?()
@@ -32,7 +37,7 @@ _Within Changesets_
     do:
       add_error(
         changeset,
-        :set_password, #virtual passowrd field
+        :set_password, #virtual password field
         dgettext(
           "errors",
           "The chosen password must not match %{link_start}this list of common passwords%{link_end}.",
@@ -44,11 +49,9 @@ _Within Changesets_
       )
 ```
 
-
-
 ## Installation
 
-The package can be installed by adding `leaked_passwords` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `:leaked_passwords` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -57,5 +60,10 @@ def deps do
   ]
 end
 ```
-The docs can be found at [https://hexdocs.pm/leaked_passwords](https://hexdocs.pm/leaked_passwords).
 
+## Copyright and License
+
+Copyright (c) 2018 Maarten Jacobs
+
+This work is free. You can redistribute it and/or modify it under the
+terms of the MIT License. See the [LICENSE.md](./LICENSE.md) file for more details.
