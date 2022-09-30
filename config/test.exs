@@ -1,3 +1,3 @@
-use Mix.Config
+import Config
 
 config :leaked_passwords, :adapter, HaveIBeenPwnedApi.MockAdapter
