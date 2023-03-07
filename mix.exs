@@ -8,7 +8,7 @@ defmodule LeakedPasswords.MixProject do
     [
       app: :leaked_passwords,
       version: @version,
-      elixir: "~> 1.13.0",
+      elixir: "~> 1.14.0",
       description: """
       Wrapper around Troy Hunt's endpoints for checking whether a given password
       has been leaked in any of his HaveIBeenPwned datasets.
@@ -46,7 +46,7 @@ defmodule LeakedPasswords.MixProject do
     [
       {:credo, "~> 1.0", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: [:dev, :test], runtime: false},
-      {:httpoison, "~> 1.7"}
+      {:httpoison, "~> 2.0"}
     ]
   end
 
