@@ -2,7 +2,7 @@ defmodule LeakedPasswords.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/tarzan/leaked_passwords"
-  @version "1.2.1"
+  @version "1.2.2"
 
   def project do
     [
