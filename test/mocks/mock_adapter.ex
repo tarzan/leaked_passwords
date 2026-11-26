@@ -1,4 +1,6 @@
 defmodule HaveIBeenPwnedApi.MockAdapter do
+  @moduledoc false
+
   @response_as_tuple {
     "000CF9AD799ED38E6C4EEBBB9558C51FCC2:2",
     "003B7663383C93256794AE1AA5C71083F80:3",
