@@ -2,7 +2,7 @@ defmodule LeakedPasswords.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/tarzan/leaked_passwords"
-  @version "1.2.2"
+  @version "2.0.0"
 
   def project do
     [
@@ -13,7 +13,7 @@ defmodule LeakedPasswords.MixProject do
       Wrapper around Troy Hunt's endpoints for checking whether a given password
       has been leaked in any of his HaveIBeenPwned datasets.
       This wrapper uses the 'safe' endpoints by first calculating the SHA1 and
-      then only POSTing the first 5 characters to the API endpoints.
+      then only sending the first 5 characters to the API endpoints.
       """,
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -58,6 +58,7 @@ defmodule LeakedPasswords.MixProject do
       ],
       main: "readme",
       source_url: @source_url,
+      source_ref: "v#{@version}",
       formatters: ["html"]
     ]
   end

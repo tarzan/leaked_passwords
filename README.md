@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/hexpm/l/leaked_passwords.svg)](https://github.com/tarzan/leaked_passwords/blob/master/LICENSE)
 [![Last Updated](https://img.shields.io/github/last-commit/tarzan/leaked_passwords.svg)](https://github.com/tarzan/leaked_passwords/commits/master)
 
-A wrapper around [Have I Been Pwned?](https://haveibeenpwned.com/) API endpoints for checking through its datasets whether a given password has been leaked. This wrapper uses the 'safe' endpoints by first calculating the SHA1 and then only POSTing the first 5 characters to the API endpoints.
+A wrapper around [Have I Been Pwned?](https://haveibeenpwned.com/) API endpoints for checking through its datasets whether a given password has been leaked. This wrapper uses the 'safe' endpoints by first calculating the SHA1 and then only sending the first 5 characters to the API endpoints.
 
 ---
 
@@ -59,7 +59,7 @@ The package can be installed by adding `:leaked_passwords` to your list of depen
 ```elixir
 def deps do
   [
-    {:leaked_passwords, "~> 1.0"}
+    {:leaked_passwords, "~> 2.0"}
   ]
 end
 ```
