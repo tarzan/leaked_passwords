@@ -51,6 +51,9 @@ _Within Changesets_
 
 ## Installation
 
+Requires Elixir 1.17 or later (within the 1.x series) and Erlang/OTP 27 or later.
+HTTPoison 3 and its Hackney 4 dependency require these newer runtimes.
+
 The package can be installed by adding `:leaked_passwords` to your list of dependencies in `mix.exs`:
 
 ```elixir
@@ -60,6 +63,22 @@ def deps do
   ]
 end
 ```
+
+## Development
+
+The development runtime is pinned in `.tool-versions`. With mise installed:
+
+```sh
+mise install
+mise exec -- mix deps.get
+mise exec -- mix test --warnings-as-errors
+mise exec -- mix format --check-formatted
+mise exec -- mix credo
+mise exec -- mix docs --warnings-as-errors
+```
+
+CI tests Elixir 1.17.0 / OTP 27.3 and Elixir 1.20.5 / OTP 29.1.3.
+Tests use a mock HIBP adapter and do not contact the live service.
 
 ## Copyright and License
 

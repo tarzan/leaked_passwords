@@ -1,4 +1,8 @@
 defmodule HaveIBeenPwnedApi.Adapter do
+  @moduledoc """
+  HTTP adapter for the Pwned Passwords API, parsing response lines into a tuple.
+  """
+
   use HTTPoison.Base
 
   @endpoint "https://api.pwnedpasswords.com/"

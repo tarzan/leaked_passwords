@@ -1,4 +1,8 @@
 defmodule HaveIBeenPwnedApi.Range do
+  @moduledoc """
+  Fetches Pwned Passwords hash ranges using a five-character SHA-1 prefix.
+  """
+
   @default_adapter HaveIBeenPwnedApi.Adapter
 
   def get(<<hash_prefix::bytes-size(5)>>) do
